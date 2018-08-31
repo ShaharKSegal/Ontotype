@@ -67,7 +67,6 @@ def get_symbol2gene():
 def get_go_dag():
     """
     Gets the GO DAG by a given path
-    :param path: a path to the GO DAG
     :return: GODag object see goatools.obo_parser.GODag for details
     """
     return _go_dag
@@ -115,7 +114,16 @@ def convert_dict_to_indicator_df(d: Dict[str, Set[str]]) -> pd.DataFrame:
     return df
 
 
-def get_genes_semantic_similarity(gene1, gene2, symbol2go):
+def get_genes_semantic_similarity(gene1, gene2, symbol2go) -> float:
+    """
+    Calculate similarity between 2 genes using the symbol2go mapping of genes to go terms.
+    Similarity is implemented as the average of all resnik go terms similarity of any go term associated with gene 1
+    to any go term associated with gene 2
+    :param gene1:
+    :param gene2:
+    :param symbol2go:
+    :return:
+    """
     terms = itertools.product(symbol2go[gene1], symbol2go[gene2])
     sum_sim = 0.0
     for term1, term2 in terms:
