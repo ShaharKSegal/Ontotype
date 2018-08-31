@@ -1,4 +1,9 @@
 data/gene2go
 data/goa_human.gaf
 data/go-basic.obo
+data/gene2go_shuffled_genes.pickle
+data/gene2symbol_dict.pickle
+data/go_model_symbol2go_extended_mat.pickle
+data/mutations.tsv
+data/1-s2.0-S0092867415004304-mmc3.xlsx
 .idea
