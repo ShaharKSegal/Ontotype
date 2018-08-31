@@ -9,6 +9,7 @@ from goatools import obo_parser
 from goatools.associations import read_ncbi_gene2go, read_gaf
 from goatools.semantic import TermCounts, resnik_sim
 
+from general_utils import HidePrints
 from consts import *
 from cacher import cache_func
 
@@ -36,12 +37,13 @@ def _init_gene2symbol_dict():
     return res
 
 
-_go_dag = obo_parser.GODag(go_obo_path)
-_gaf = read_gaf(gaf_path)
-_termcounts = TermCounts(_go_dag, _gaf)
-_gene2go = read_ncbi_gene2go(gene2go_path)
-_gene2symbol = _init_gene2symbol_dict()
-_symbol2gene = {symbol: gene for gene, symbol in _gene2symbol.items()}
+with HidePrints():
+    _go_dag = obo_parser.GODag(go_obo_path)
+    _gaf = read_gaf(gaf_path, prt=None)
+    _termcounts = TermCounts(_go_dag, _gaf)
+    _gene2go = read_ncbi_gene2go(gene2go_path)
+    _gene2symbol = _init_gene2symbol_dict()
+    _symbol2gene = {symbol: gene for gene, symbol in _gene2symbol.items()}
 
 
 def get_genes():

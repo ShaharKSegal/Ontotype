@@ -2,6 +2,10 @@ import argparse
 
 import matplotlib.pyplot as plt
 
+import model as dm
+import ppi_data as ppi
+import ontotype_random_forest as rf
+
 
 def main():
     parser = argparse.ArgumentParser(description='Train and present ROC curve of a model with the data',
@@ -25,11 +29,6 @@ def main():
     parser.add_argument('-mt', '--max_go_threshold', dest='max_go_threshold', type=int, default=1000,
                         help='Max threshold for each go term which are associated with too many genes.')
     args = parser.parse_args()
-    print(args)
-
-    import model as dm
-    import ppi_data as ppi
-    import ontotype_random_forest as rf
 
     ppi_data = ppi.UnifiedPPIData()
     for d in args.data:
