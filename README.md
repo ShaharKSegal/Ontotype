@@ -58,7 +58,7 @@ Datasets are read by objects inheriting from `PPIData`. Your own implementation 
 add your option to the 'data' argument in the parser and add your case to lines referring to that argument.
 
 ## Creting your own model
-All models inherit from `Model`, must of the ontotype implementation is under `GOModel` which add useful properties and functions to the basic model which are relevant for ontotype models.
+All models inherit from `Model`. Most of the ontotype models inherit `GOModel`, which adds useful properties and functions to the basic model that are relevant for ontotype models.
 
 <br/> For the `run.py` to recognize your new implementation,
 add your option to the 'model' argument in the parser and add your case to lines referring to that argument.
