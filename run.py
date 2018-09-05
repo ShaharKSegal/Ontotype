@@ -15,7 +15,8 @@ def main():
     parser.add_argument('-m', '--model', dest='model', type=str, choices=['asym_go', 'sym_go'], required=True,
                         help='model to use for learning.'
                              '\n Available options: '
-                             '\n\t asym_go - asymmetric go terms model ')
+                             '\n\t asym_go - asymmetric go terms model '
+                             '\n\t sym_go - symmetric go terms model ')
     parser.add_argument('-t', '--test', dest='full_test', action='store_true',
                         help='Test all models against a shuffled versions and plot it')
     parser.add_argument('-s', '--shuffle', '--shuffle_genes', dest='shuffle_genes', action='store_true',
@@ -26,7 +27,7 @@ def main():
                         help='Defined k for the k-fold cross validation')
     parser.add_argument('-iz', '--ignore_zeros', dest='ignore_zeros', action='store_true',
                         help='Ignore zero rows produced by the model (both in training and testing).')
-    parser.add_argument('-mt', '--max_go_threshold', dest='max_go_threshold', type=int, default=1000,
+    parser.add_argument('-mt', '--max_go_threshold', dest='max_go_threshold', type=int, default=500,
                         help='Max threshold for each go term which are associated with too many genes.')
     args = parser.parse_args()
 

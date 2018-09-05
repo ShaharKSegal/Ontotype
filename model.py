@@ -45,7 +45,7 @@ class GOModel(Model, metaclass=ABCMeta):
     SIMILARITY_FEATURE_NAME = 'Gene_Interactor_Similarity'
 
     def __init__(self, ppi: PPIData, shuffle_genes=False, similarity_feature=False, ignore_zeros=True,
-                 max_go_threshold=1000):
+                 max_go_threshold=500):
         """
         Constructor for go models
         :param ppi: ppi data for the model
@@ -90,7 +90,8 @@ class GOModel(Model, metaclass=ABCMeta):
         """
         rows = dict()
         empty_vec = pd.Series(0, index=self.symbol2go_df.columns)
-        gene_interactor_sim = self._ppi_data.compute_gene_interactor_similarity(self.symbol2go)
+        if self.similarity_feature:
+            gene_interactor_sim = self._ppi_data.compute_gene_interactor_similarity(self.symbol2go)
         ppi_group = self._ppi_data.data.groupby(self._ppi_data.PPI_DATA_KEYS, as_index=False)
         ppi_group_mean = ppi_group[self._ppi_data.PPI_DATA_VALUES].mean()
         for symbol, interactor, interaction_mean in ppi_group_mean.itertuples(index=False, name=None):
