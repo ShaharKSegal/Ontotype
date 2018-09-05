@@ -9,14 +9,14 @@ import pandas as pd
 import data_utils
 from consts import *
 from general_utils import lazy_init
-from ppi_data import AbstractPPIData
+from ppi_data import PPIData
 
 
 class AbstractDataModel(metaclass=ABCMeta):
     LABEL_COL_NAME = 'label'
 
     @abstractmethod
-    def __init__(self, ppi: AbstractPPIData):
+    def __init__(self, ppi: PPIData):
         self._ppi_data = ppi
 
     @abstractmethod
@@ -31,7 +31,7 @@ class AbstractDataModel(metaclass=ABCMeta):
 class AbstractGODataModel(AbstractDataModel, metaclass=ABCMeta):
     SIMILARITY_FEATURE_NAME = 'Gene_Interactor_Similarity'
 
-    def __init__(self, ppi: AbstractPPIData, shuffle_genes=False, similarity_feature=False, ignore_zeros=True,
+    def __init__(self, ppi: PPIData, shuffle_genes=False, similarity_feature=False, ignore_zeros=True,
                  max_go_threshold=1000):
         super().__init__(ppi)
 
@@ -196,6 +196,6 @@ class SymetricGODataModel(AbstractGODataModel):
 
 
 class EmbeddingDataModel(AbstractDataModel):
-    def __init__(self, ppi: AbstractPPIData):
+    def __init__(self, ppi: PPIData):
         super().__init__(ppi)
         raise NotImplementedError('Not implemented yet!')

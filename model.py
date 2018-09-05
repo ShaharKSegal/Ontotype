@@ -9,10 +9,10 @@ import pandas as pd
 import data_utils
 from consts import *
 from general_utils import lazy_init
-from ppi_data import AbstractPPIData
+from ppi_data import PPIData
 
 
-class AbstractModel(metaclass=ABCMeta):
+class Model(metaclass=ABCMeta):
     """
     Abstract class for data models.
     Each new class must implement get_classification_data and get_regression_data which compute the features and values
@@ -21,7 +21,7 @@ class AbstractModel(metaclass=ABCMeta):
     LABEL_COL_NAME = 'label'
 
     @abstractmethod
-    def __init__(self, ppi: AbstractPPIData):
+    def __init__(self, ppi: PPIData):
         self._ppi_data = ppi
 
     @abstractmethod
@@ -33,7 +33,7 @@ class AbstractModel(metaclass=ABCMeta):
         pass
 
 
-class AbstractGOModel(AbstractModel, metaclass=ABCMeta):
+class GOModel(Model, metaclass=ABCMeta):
     """
     Abstract class for GO terms data models.
     Implements the basic features and data processing needed for each GO terms model
@@ -44,7 +44,7 @@ class AbstractGOModel(AbstractModel, metaclass=ABCMeta):
 
     SIMILARITY_FEATURE_NAME = 'Gene_Interactor_Similarity'
 
-    def __init__(self, ppi: AbstractPPIData, shuffle_genes=False, similarity_feature=False, ignore_zeros=True,
+    def __init__(self, ppi: PPIData, shuffle_genes=False, similarity_feature=False, ignore_zeros=True,
                  max_go_threshold=1000):
         """
         Constructor for go models
@@ -181,7 +181,7 @@ class AbstractGOModel(AbstractModel, metaclass=ABCMeta):
         return symbol2go_df
 
 
-class AsymmetricGOModel(AbstractGOModel):
+class AsymmetricGOModel(GOModel):
     """
     Asymmetric go terms model. (the asymmetry is on genes to interactors)
     Filters go terms which doesn't appear in any (gene, interactor) tuple.
@@ -218,7 +218,7 @@ class AsymmetricGOModel(AbstractGOModel):
         return new_symbol2go
 
 
-class SymmetricGOModel(AbstractGOModel):
+class SymmetricGOModel(GOModel):
     """
     Symmetric go terms model.
     Filters go terms which doesn't appear in any two genes (could be 2 genes, 2 interactors or (gene, interactor).

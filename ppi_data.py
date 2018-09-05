@@ -10,7 +10,7 @@ from consts import *
 from general_utils import lazy_init
 
 
-class AbstractPPIData(metaclass=ABCMeta):
+class PPIData(metaclass=ABCMeta):
     """
     Abstract class for ppi data used by any model.
     Each new class must implement _get_data_impl which extract the data from it's source and process it for usage.
@@ -85,6 +85,10 @@ class AbstractPPIData(metaclass=ABCMeta):
     @classmethod
     @abstractmethod
     def _get_column_mapping(cls) -> Dict[str, str]:
+        """
+        Returns a mapping of the column named returned by _get_data_impl to the standard column names in PPI_DATA_COL_LST
+        :return: Dict[str, str]
+        """
         pass
 
     @classmethod
@@ -97,7 +101,7 @@ class AbstractPPIData(metaclass=ABCMeta):
         return data.rename(cls._get_column_mapping(), axis='columns')[cls.PPI_DATA_COL_LST].reset_index(drop=True)
 
 
-class VidalPPIData(AbstractPPIData):
+class VidalPPIData(PPIData):
     """
     Class for ppi data taken from vidal's paper: https://doi.org/10.1016/j.cell.2015.04.013
     Supplementary data 3 is needed
@@ -129,7 +133,7 @@ class VidalPPIData(AbstractPPIData):
                         cls.PPI_DATA_COL_LST))
 
 
-class IMExPPIData(AbstractPPIData):
+class IMExPPIData(PPIData):
     """
     Class for ppi data taken from imex dataset: https://www.ebi.ac.uk/intact/resources/datasets#mutationDs
     (the mutations.tsv in the link)
@@ -225,7 +229,7 @@ class IMExPPIData(AbstractPPIData):
                         cls.PPI_DATA_COL_LST))
 
 
-class UnifiedPPIData(AbstractPPIData):
+class UnifiedPPIData(PPIData):
     """
     Class to unify other ppi data classes.
     This could be tricky since some might be incompatible or in need of alteration.
@@ -235,7 +239,7 @@ class UnifiedPPIData(AbstractPPIData):
         super().__init__()
         self._ppi_dict = {}
 
-    def add_ppi(self, ppi: AbstractPPIData):
+    def add_ppi(self, ppi: PPIData):
         if type(ppi) in self._ppi_dict:
             raise KeyError("ppi type already exists in dict")
         self._ppi_dict[type(ppi)] = ppi
