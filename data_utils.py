@@ -30,7 +30,7 @@ def _init_gene2symbol_dict():
                                  species='human', entrezonly=True, as_dataframe=True,
                                  df_index=False, verbose=False)
         if 'notfound' in query_res.columns:
-            query_res = query_res[query_res.notfound != True]
+            query_res = query_res[query_res.notfound != True]  # ignore PEP8 warnings.
         query_result_list.append(query_res)
     df_res = pd.concat(query_result_list)
     res = dict(zip(df_res.entrezgene, df_res.symbol))
@@ -90,7 +90,7 @@ def get_uniprot2symbol(uniprot_ids: np.ndarray, drop_duplicates=True):
                                  species='human', entrezonly=True, as_dataframe=True,
                                  df_index=True, verbose=False)
         if 'notfound' in query_res.columns:
-            query_res = query_res[query_res.notfound != True]
+            query_res = query_res[query_res.notfound != True] # ignore PEP8 warnings.
         query_result_list.append(query_res)
     df_res = pd.concat(query_result_list)
     df_res = df_res[df_res['symbol'].isin(get_symbols())]
