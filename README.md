@@ -34,14 +34,14 @@ pip install -r requirements.txt
 Basic run:
 <br/>(note that your first run might be slow due to first time computing of objects which are cached later on)
 ```
-python run.py --data imex --model asym_go
+python run.py --data vidal --model asym_go
 ```
 This will run the asymmetric model with IMEx data and plot the ROC curse with 5-Fold cross validation on the data.
-<br/> To run on vidal's data change the `-data` argument to `-data vidal`, alternatively chose `-data imex vidal` for both.
+<br/> To run on imex's data change the `-data` argument to `-data vidal`, alternatively chose `-data imex vidal` for both.
 
 For a test run that will compare different models vs shuffled variants:
 ```
-python run.py --data imex --model asym_go --test
+python run.py --data vidal --model asym_go --test
 ```
 
 For more information on the different parameters that can be altered:
